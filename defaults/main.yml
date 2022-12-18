@@ -1,2 +1,6 @@
 ---
-# defaults file for ansible-role-template
+# defaults file for ansible-role-nomad
+
+# Nomad vars
+hashicorp_releases_url: https://releases.hashicorp.com
+nomad_version:

@@ -1,7 +1,8 @@
 galaxy_info:
-  role_name: template
+  role_name: nomad
+  namespace: brucellino
   author: Bruce Becker
-  description: Ansible role template
+  description: Ansible role for Hashicorp Nomad
   company: HaH
   license: MIT
   min_ansible_version: "2.9"
@@ -13,7 +14,6 @@ galaxy_info:
       versions:
         - focal
         - bionic
-
   galaxy_tags:
     - template
 dependencies: []
