@@ -8,12 +8,28 @@ on:
     branches:
       - main
 jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Ansible Lint
+        uses: ansible-community/ansible-lint@v6.8.2
+        with:
+          path: test/lint-playbook.yml
+        env:
+          ANSIBLE_ROLES_PATH: "${PWD}/../"
+
+
   release:
     name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Setup Node.js
