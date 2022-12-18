@@ -1,0 +1,16 @@
+---
+# install tasks for Nomad
+- name: Ensure prerequisites
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ prerequisites[ansible_distribution | lower] }}"
+
+- name: Ensure nomad binary
+  ansible.builtin.unarchive:
+    src: "{{ hashicorp_releases_url }}/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_{{ ansible_architecture }}"
+    dest: "{{ nomad_install_dir }}"
+    creates: "{{ nomad_install_dir }}/nomad"
+    mode: 0777
+    owner: root
+    group: root
