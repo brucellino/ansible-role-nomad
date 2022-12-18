@@ -33,11 +33,11 @@ jobs:
       - name: Get Packer
         run: |
           curl https://releases.hashicorp.com/packer/1.8.5/packer_1.8.5_freebsd_amd64.zip \
-          | gunzip -> packer ;\
-          chmod u+x packer
+          | gunzip -> packer
+      - name: Make packer executable
+        run: chmod u+x packer
       - name: Init packer
-        run: |
-          "../../packer init ."
+        run: pwd ; ls ; ../../packer init .
         working-directory: .github/build
 
   release:
