@@ -42,7 +42,9 @@ jobs:
 
   release:
     name: Release
-    needs: lint
+    needs:
+      - ansible-lint
+      - packer-lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
