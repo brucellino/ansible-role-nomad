@@ -12,7 +12,7 @@ source "digitalocean" "server" {
   region = "ams3"
   size = "s-1vcpu-1gb"
   ssh_username = "root"
-  snapshot_name = "nomad-{{timestamp}}"
+  snapshot_name = "nomad-server-{{timestamp}}"
   droplet_name = "nomad-server-{{timestamp}}-packer"
   tags = ["nomad", "server", "packer"]
 
@@ -23,7 +23,7 @@ source "digitalocean" "client" {
   region = "ams3"
   size = "s-1vcpu-1gb"
   ssh_username = "root"
-  snapshot_name = "nomad-{{timestamp}}"
+  snapshot_name = "nomad-client-{{timestamp}}"
   droplet_name = "nomad-client-{{timestamp}}-packer"
   tags = ["nomad", "client", "packer"]
 }
@@ -32,9 +32,9 @@ build {
   sources = ["source.digitalocean.server"]
   provisioner "ansible" {
     playbook_file = "playbook.yml"
-    groups = ["nomad", "server"]
+    groups = ["nomad", "servers"]
     ansible_env_vars = [
-      "ANSIBLE_ROLES_PATH=$PWD/../"
+      "ANSIBLE_ROLES_PATH=../../../"
     ]
   }
 }
@@ -43,9 +43,9 @@ build {
   sources = ["source.digitalocean.client"]
   provisioner "ansible" {
     playbook_file = "playbook.yml"
-    groups = ["nomad", "client"]
+    groups = ["nomad", "clients"]
     ansible_env_vars = [
-      "ANSIBLE_ROLES_PATH=$PWD/../"
+      "ANSIBLE_ROLES_PATH=../../../"
     ]
   }
 }
