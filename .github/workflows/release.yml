@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Ansible Lint
-        uses: ansible-community/ansible-lint@v6.8.2
+        uses: ansible-community/ansible-lint-action@v6.8.2
         with:
           path: test/lint-playbook.yml
         env:
