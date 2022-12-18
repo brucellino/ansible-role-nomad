@@ -68,7 +68,6 @@ jobs:
     name: Build
     needs:
       - release
-      - lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
