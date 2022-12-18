@@ -1,3 +1,11 @@
 ---
-- name: Configure nodes
-  hosts: nomad_nodes
+- name: Configure servers
+  hosts: servers
+  roles:
+    - role: ansible-role-nomad
+      server: true
+- name: Configure clients
+  hosts: clients
+  roles:
+    - role: ansible-role-nomad
+      server: false
