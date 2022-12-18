@@ -14,3 +14,44 @@
     mode: 0777
     owner: root
     group: root
+
+- name: Ensure Nomad data directory
+  ansible.builtin.file:
+    path: "{{ nomad_data_dir }}"
+    state: directory
+    mode: 0777
+    owner: root
+    group: root
+
+- name: Add Nomad user for server
+  when: server | bool
+  block:
+    - name: Add nomad group
+      ansible.builtin.group:
+        name: nomad
+        gid: 1010
+        state: present
+    - name: Add nomad user
+      ansible.builtin.user:
+        name: nomad
+        comment: Nomad user for Nomad server managed by Ansible
+        group: nomad
+        groups: nomad
+        append: true
+        state: present
+
+- name: Template systemd unit
+  ansible.builtin.template:
+    src: etc/systemd/system/nomad.service.j2
+    dest: /etc/systemd/system/nomad.service
+    mode: 0644
+    owner: root
+    group: root
+  notify: reload service
+
+- name: Ensure nomad service
+  ansible.builtin.systemd:
+    name: nomad
+    state: restarted
+    enabled: true
+    daemon_reload: true
