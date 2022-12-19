@@ -28,13 +28,13 @@ autopilot_enabled: false
 # Task drivers
 
 ## Containerd variables
-enabled_containerd: true # enable containerd by default
+enable_containerd: true # enable containerd by default
 containerd_version: 1.6.8
-containerd_url: |-
+containerd_url: >-
   https://github.com/containerd/containerd/releases/download/
   v{{ containerd_version }}/
   containerd-{{ containerd_version }}
-  -linux-{{ hashi_arch['ansible_architecture'] }}.tar.gz
+  -linux-{{ hashi_arch[ansible_architecture] }}.tar.gz
 containerd_install_dir: /usr/local
 
 
