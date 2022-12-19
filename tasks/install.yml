@@ -40,6 +40,26 @@
         append: true
         state: present
 
+- name: Ensure Nomad config directory
+  ansible.builtin.file:
+    path: "{{ nomad_config_dir }}"
+    state: directory
+    mode: 0777
+    owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
+
+- name: Template Nomad config directory
+  ansible.builtin.template:
+    src: etc/nomad.d/nomad.hcl.j2
+    dest: "{{ nomad_config_dir }}/nomad.hcl"
+    mode: 0644
+    owner: "{{ (server | bool ) | ternary('nomad', 'root') }}"
+    group: "{{ (server | bool ) | ternary('nomad', 'root') }}"
+    newline_sequence: \n
+    block_start_string: "[%"
+    block_end_string: "%]"
+    variable_start_string: "[["
+    variable_end_string: "]]"
+
 - name: Template systemd unit
   ansible.builtin.template:
     src: etc/systemd/system/nomad.service.j2
