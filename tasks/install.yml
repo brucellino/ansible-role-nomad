@@ -68,7 +68,7 @@
     mode: 0644
     owner: root
     group: root
-  notify: reload service
+  notify: Reload service
 
 - name: Ensure nomad service
   ansible.builtin.systemd:

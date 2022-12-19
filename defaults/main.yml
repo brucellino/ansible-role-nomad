@@ -16,9 +16,15 @@ hashi_arch:
 # Nomad vars
 hashicorp_releases_url: https://releases.hashicorp.com
 nomad_version: 1.4.3
+
 nomad_install_dir: /usr/local/bin
 nomad_data_dir: /opt/nomad
 nomad_config_dir: /etc/nomad.d
+
+## Nomad server config variables
+nomad_datacenter: "dc-test"
+consul_enabled: false
+autopilot_enabled: false
 # Task drivers
 
 ## Containerd variables
