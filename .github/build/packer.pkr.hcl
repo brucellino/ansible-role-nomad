@@ -8,7 +8,7 @@ packer {
 }
 
 source "digitalocean" "server" {
-  image = "ubuntu-20-04-x64"
+  image = "ubuntu-22-04-x64"
   region = "ams3"
   size = "s-1vcpu-1gb"
   ssh_username = "root"
@@ -19,7 +19,7 @@ source "digitalocean" "server" {
 }
 
 source "digitalocean" "client" {
-  image = "ubuntu-20-04-x64"
+  image = "ubuntu-22-04-x64"
   region = "ams3"
   size = "s-1vcpu-1gb"
   ssh_username = "root"
