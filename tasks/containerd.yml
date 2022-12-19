@@ -43,3 +43,12 @@
     mode: 0700
     owner: root
     group: root
+
+- name: Add Nomad configuration for containerd
+  ansible.builtin.copy:
+    dest: "{{ nomad_config_dir }}/containerd.hcl"
+    src: etc/nomad.d/containerd.hcl
+    backup: true
+    mode: 0644
+    owner: root
+    group: root
