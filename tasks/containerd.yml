@@ -1,7 +1,7 @@
 ---
 - name: Ensure containerd binary
   ansible.builtin.unarchive:
-    src: "{{ containerd_url }}"
+    src: "{{ containerd_url | replace(' ', '') }}"
     dest: "{{ containerd_install_dir }}"
     creates: "{{ containerd_install_dir }}/bin/containerd"
     remote_src: true
