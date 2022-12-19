@@ -53,8 +53,8 @@
     src: etc/nomad.d/nomad.hcl.j2
     dest: "{{ nomad_config_dir }}/nomad.hcl"
     mode: 0644
-    owner: "{{ (server | bool ) | ternary('nomad', 'root') }}"
-    group: "{{ (server | bool ) | ternary('nomad', 'root') }}"
+    owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
+    group: "{{ (server | bool) | ternary('nomad', 'root') }}"
     newline_sequence: \n
     block_start_string: "[%"
     block_end_string: "%]"

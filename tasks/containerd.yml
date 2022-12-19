@@ -1,0 +1,11 @@
+---
+- name: Ensure containerd binary
+  ansible.builtin.unarchive:
+    src: "{{ containerd_url }}"
+    dest: "{{ containerd_install_dir }}"
+    creates: "{{ containerd_install_dir }}/bin/containerd"
+    remote_src: true
+    validate_certs: true
+    mode: 0777
+    owner: root
+    group: root
