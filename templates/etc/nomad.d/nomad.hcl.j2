@@ -1,0 +1,67 @@
+datacenter = "[[ nomad_datacenter ]]"
+
+[% if autopilot_enabled %]
+autopilot {
+  cleanup_dead_servers      = true
+  last_contact_threshold    = "200ms"
+  max_trailing_logs         = 250
+  server_stabilization_time = "10s"
+}
+[% endif %]
+
+[% if server | bool %]
+server {
+  enabled = true
+  bootstrap_expect = 1
+  data_dir = "[[ nomad_data_dir ]]"
+  raft_protocol = 3
+  server_join {
+    retry_join = [ "nomad.service.consul" ]
+  }
+
+  node_gc_threshold = "1h"
+  job_gc_interval = "5m"
+  job_gc_threshold = "30m"
+  eval_gc_threshold = "24h"
+
+  heartbeat_grace = "20s"
+  min_heartbeat_ttl = "30s"
+  non_voting_server = false
+
+  rejoin_after_leave = true
+
+  search {
+    fuzzy_enabled = true
+    limit_query = 10
+    limit_results = 100
+    min_term_length = 5
+  }
+
+}
+[% else %]
+client {
+  enabled = true
+}
+[% endif %]
+
+acl {
+  enabled = false
+}
+
+[% if consul_enabled %]
+consul {
+  address             = "127.0.0.1:8500"
+  server_service_name = "nomad"
+  client_service_name = "nomad-client"
+  auto_advertise      = true
+  server_auto_join    = true
+  client_auto_join    = true
+  tags = ["nomad", "ansible-managed"]
+  timeout = "30s"
+
+  # token = ""
+  # ssl = false
+  # key_file = ""
+
+}
+[% endif  %]

@@ -1,2 +1,4 @@
 ---
 # tasks file for ansible-role-nomad
+- name: Install
+  ansible.builtin.import_tasks: install.yml

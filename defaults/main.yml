@@ -1,6 +1,38 @@
 ---
 # defaults file for ansible-role-nomad
 
+# prerequisite packages
+prerequisites:
+  ubuntu:
+    - curl
+    - net-tools
+    - unzip
+    - vim
+    - wget
+hashi_arch:
+  x86_64: amd64
+  arm64: arm64
+
 # Nomad vars
 hashicorp_releases_url: https://releases.hashicorp.com
-nomad_version:
+nomad_version: 1.4.3
+
+nomad_install_dir: /usr/local/bin
+nomad_data_dir: /opt/nomad
+nomad_config_dir: /etc/nomad.d
+
+## Nomad server config variables
+nomad_datacenter: "dc-test"
+consul_enabled: false
+autopilot_enabled: false
+# Task drivers
+
+## Containerd variables
+containerd_enabled: true # enable containerd by default
+
+
+## Java variables
+
+## raw_exec variables
+
+##

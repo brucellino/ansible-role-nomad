@@ -8,8 +8,8 @@ on:
     branches:
       - main
 jobs:
-  lint:
-    name: lint
+  ansible_lint:
+    name: ansible lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,11 +22,29 @@ jobs:
           path: test/lint-playbook.yml
         env:
           ANSIBLE_ROLES_PATH: "${PWD}/../"
-
+  packer_lint:
+    name: Packer lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get Packer
+        run: |
+          curl https://releases.hashicorp.com/packer/1.8.5/packer_1.8.5_linux_amd64.zip \
+          | gunzip -> packer
+      - name: Make packer executable
+        run: chmod u+x packer
+      - name: Init packer
+        run: ../../packer init .
+        working-directory: .github/build
 
   release:
     name: Release
-    needs: lint
+    needs:
+      - ansible_lint
+      - packer_lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,3 +64,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+  build:
+    name: Build
+    needs:
+      - release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Packer
+        run: |
+          curl https://releases.hashicorp.com/packer/1.8.5/packer_1.8.5_freebsd_amd64.zip \
+          | gunzip -> packer ;\
+          chmod u+x packer

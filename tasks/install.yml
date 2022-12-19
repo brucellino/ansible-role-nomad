@@ -1,0 +1,78 @@
+---
+# install tasks for Nomad
+- name: Ensure prerequisites
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ prerequisites[ansible_distribution | lower] }}"
+
+- name: Ensure nomad binary
+  ansible.builtin.unarchive:
+    src: "{{ hashicorp_releases_url }}/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_{{ hashi_arch[ansible_architecture] }}.zip"
+    remote_src: true
+    dest: "{{ nomad_install_dir }}"
+    creates: "{{ nomad_install_dir }}/nomad"
+    mode: 0777
+    owner: root
+    group: root
+
+- name: Ensure Nomad data directory
+  ansible.builtin.file:
+    path: "{{ nomad_data_dir }}"
+    state: directory
+    mode: 0777
+    owner: root
+    group: root
+
+- name: Add Nomad user for server
+  when: server | bool
+  block:
+    - name: Add nomad group
+      ansible.builtin.group:
+        name: nomad
+        gid: 1010
+        state: present
+    - name: Add nomad user
+      ansible.builtin.user:
+        name: nomad
+        comment: Nomad user for Nomad server managed by Ansible
+        group: nomad
+        groups: nomad
+        append: true
+        state: present
+
+- name: Ensure Nomad config directory
+  ansible.builtin.file:
+    path: "{{ nomad_config_dir }}"
+    state: directory
+    mode: 0777
+    owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
+
+- name: Template Nomad config directory
+  ansible.builtin.template:
+    src: etc/nomad.d/nomad.hcl.j2
+    dest: "{{ nomad_config_dir }}/nomad.hcl"
+    mode: 0644
+    owner: "{{ (server | bool ) | ternary('nomad', 'root') }}"
+    group: "{{ (server | bool ) | ternary('nomad', 'root') }}"
+    newline_sequence: \n
+    block_start_string: "[%"
+    block_end_string: "%]"
+    variable_start_string: "[["
+    variable_end_string: "]]"
+
+- name: Template systemd unit
+  ansible.builtin.template:
+    src: etc/systemd/system/nomad.service.j2
+    dest: /etc/systemd/system/nomad.service
+    mode: 0644
+    owner: root
+    group: root
+  notify: Reload service
+
+- name: Ensure nomad service
+  ansible.builtin.systemd:
+    name: nomad
+    state: restarted
+    enabled: true
+    daemon_reload: true

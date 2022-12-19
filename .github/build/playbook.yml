@@ -1,0 +1,19 @@
+---
+- name: Wait for cloud-init
+  hosts: all
+  tasks:
+    - name: wait for cloud init to complete
+      wait_for:
+        state: present
+        path: /var/log/cloud-init-output.log
+        search_regex: "^.*finished.*$"
+- name: Configure servers
+  hosts: servers
+  roles:
+    - role: ansible-role-nomad
+      server: true
+- name: Configure clients
+  hosts: clients
+  roles:
+    - role: ansible-role-nomad
+      server: false
