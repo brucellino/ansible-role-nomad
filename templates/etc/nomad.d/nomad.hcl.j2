@@ -1,4 +1,6 @@
+# Main variables
 datacenter = "[[ nomad_datacenter ]]"
+data_dir = "[[ nomad_data_dir ]]"
 
 [% if autopilot_enabled %]
 autopilot {
@@ -13,7 +15,6 @@ autopilot {
 server {
   enabled = true
   bootstrap_expect = 1
-  data_dir = "[[ nomad_data_dir ]]"
   raft_protocol = 3
   server_join {
     retry_join = [ "nomad.service.consul" ]

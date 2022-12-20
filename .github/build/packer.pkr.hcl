@@ -18,6 +18,10 @@ source "digitalocean" "server" {
 
 }
 
+source "docker" "server" {
+  image = "ubuntu:22.04"
+}
+
 source "digitalocean" "client" {
   image = "ubuntu-22-04-x64"
   region = "ams3"

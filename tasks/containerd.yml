@@ -1,0 +1,54 @@
+---
+- name: Ensure containerd binary
+  ansible.builtin.unarchive:
+    src: "{{ containerd_url | replace(' ', '') }}"
+    dest: "{{ containerd_install_dir }}"
+    creates: "{{ containerd_install_dir }}/bin/containerd"
+    remote_src: true
+    validate_certs: true
+    mode: 0777
+    owner: root
+    group: root
+
+- name: Template containerd service unit
+  ansible.builtin.template:
+    src: etc/systemd/system/containerd.service.j2
+    dest: /etc/systemd/system/containerd.service
+    mode: 0644
+    owner: root
+    group: root
+  notify: Reload service
+
+- name: Ensure containerd started
+  ansible.builtin.service:
+    name: containerd
+    state: started
+    enabled: true
+
+- name: Ensure runc binary
+  ansible.builtin.get_url:
+    url: "{{ runc_url | replace(' ', '') }}"
+    dest: "{{ runc_install_dir }}"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Ensure Nerdctl
+  ansible.builtin.unarchive:
+    src: "{{ nerdctl_url | replace(' ', '') }}"
+    dest: "{{ nerdctl_install_dir }}"
+    creates: "{{ nerdctl_install_dir }}/nerdctl"
+    remote_src: true
+    validate_certs: true
+    mode: 0700
+    owner: root
+    group: root
+
+- name: Add Nomad configuration for containerd
+  ansible.builtin.copy:
+    dest: "{{ nomad_config_dir }}/containerd.hcl"
+    src: etc/nomad.d/containerd.hcl
+    backup: true
+    mode: 0644
+    owner: root
+    group: root

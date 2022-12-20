@@ -1,6 +1,8 @@
 ---
 # defaults file for ansible-role-nomad
-
+consul_enabled: false
+enable_containerd: true
+enable_cni: true
 # prerequisite packages
 prerequisites:
   ubuntu:
@@ -13,23 +15,50 @@ hashi_arch:
   x86_64: amd64
   arm64: arm64
 
+# CNI variables
+cni_plugins_version: 1.1.1
+cni_plugins_url: >-
+  https://github.com/containernetworking/plugins/releases/download/
+  v{{ cni_plugins_version }}/
+  cni-plugins-linux-{{ hashi_arch[ansible_architecture] }}-v{{ cni_plugins_version }}.tgz
+cni_plugins_dir: /opt/cni/bin
+
 # Nomad vars
 hashicorp_releases_url: https://releases.hashicorp.com
 nomad_version: 1.4.3
-
 nomad_install_dir: /usr/local/bin
 nomad_data_dir: /opt/nomad
 nomad_config_dir: /etc/nomad.d
 
 ## Nomad server config variables
 nomad_datacenter: "dc-test"
-consul_enabled: false
 autopilot_enabled: false
+
 # Task drivers
-
 ## Containerd variables
-containerd_enabled: true # enable containerd by default
+containerd_version: 1.6.8
+containerd_url: >-
+  https://github.com/containerd/containerd/releases/download/
+  v{{ containerd_version }}/
+  containerd-{{ containerd_version }}
+  -linux-{{ hashi_arch[ansible_architecture] }}.tar.gz
+containerd_install_dir: /usr/local
 
+## Runc variables
+runc_version: 1.1.4
+runc_url: >-
+  https://github.com/opencontainers/runc/
+  releases/download/v{{ runc_version }}/
+  runc.{{ hashi_arch[ansible_architecture] }}
+runc_install_dir: /usr/local/sbin
+
+## (contai)Nerdctl variables
+nerdctl_version: 0.23.0
+nerdctl_url: >-
+  https://github.com/containerd/nerdctl/
+  releases/download/v{{ nerdctl_version }}/
+  nerdctl-{{ nerdctl_version }}-linux-{{ hashi_arch[ansible_architecture] }}.tar.gz
+nerdctl_install_dir: /usr/local/bin
 
 ## Java variables
 
