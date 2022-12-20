@@ -26,12 +26,16 @@ Full playbook for cluster:
   hosts: nomad-servers
   roles:
     - role: ansible-role-nomad
+      server: true
 
 - name: Configure clients
   hosts: nomad-clients
   roles:
     - role: ansible-role-nomad
+      server: false
 ```
+
+Note that we separate plays for servers and clients.
 
 ## License
 
