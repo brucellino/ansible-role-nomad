@@ -1,7 +1,7 @@
 ---
 # tasks file for ansible-role-nomad
-# - name: Install
-#   ansible.builtin.import_tasks: install.yml
+- name: Install
+  ansible.builtin.import_tasks: install.yml
 - name: Enable containerd
   ansible.builtin.import_tasks: containerd.yml
   when: not (server | bool) and (enable_containerd | bool)

@@ -24,6 +24,14 @@
     owner: root
     group: root
 
+- name: Ensure Nomad configuration directory
+  ansible.builtin.file:
+    path: "{{ nomad_config_dir }}"
+    state: directory
+    mode: 0744
+    owner: root
+    group: root
+
 - name: Add Nomad user for server
   when: server | bool
   block:
