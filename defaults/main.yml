@@ -20,6 +20,7 @@ prerequisites:
 hashi_arch:
   x86_64: amd64
   arm64: arm64
+  aarch64: arm64
 
 # CNI variables
 cni_plugins_version: 1.1.1
