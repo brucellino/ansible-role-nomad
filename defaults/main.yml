@@ -11,6 +11,12 @@ prerequisites:
     - unzip
     - vim
     - wget
+  debian:
+    - curl
+    - net-tools
+    - unzip
+    - vim
+    - wget
 hashi_arch:
   x86_64: amd64
   arm64: arm64
