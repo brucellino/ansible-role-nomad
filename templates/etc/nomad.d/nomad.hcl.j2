@@ -43,7 +43,16 @@ server {
 [% else %]
 client {
   enabled = true
-  server_join
+[% if consul_enabled %]
+  server_join {
+    retry_join = ["nomad.service.consul"]
+  }
+[% else %]
+# This should be a variable list
+  server_join {
+    retry_join = ["bare", "sense", "pi3"]
+  }
+[% endif %]
 }
 [% endif %]
 
