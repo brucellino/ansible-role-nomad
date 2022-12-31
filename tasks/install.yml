@@ -73,6 +73,8 @@
   ansible.builtin.template:
     src: etc/systemd/system/nomad.service.j2
     dest: /etc/systemd/system/nomad.service
+    block_start_string: "[%"
+    block_end_string: "%]"
     mode: 0644
     owner: root
     group: root
