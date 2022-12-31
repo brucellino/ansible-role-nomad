@@ -15,7 +15,7 @@ After=consul.service
 [Service]
 # Nomad server should be run as the nomad user. Nomad clients
 # should be run as root
-User={% if server | bool %}nomad{% else %}root{% endif %}
+User=[% if server | bool %]nomad[% else %]root[% endif %]
 
 Group=nomad
 
@@ -27,7 +27,8 @@ LimitNOFILE=65536
 LimitNPROC=infinity
 Restart=on-failure
 RestartSec=2
-
+StandardOutput=append:/var/log/nomad.log
+StandardError=append:/var/log/nomad.log
 ## Configure unit start rate limiting. Units which are started more than
 ## *burst* times within an *interval* time span are not permitted to start any
 ## more. Use `StartLimitIntervalSec` or `StartLimitInterval` (depending on

@@ -14,12 +14,12 @@ autopilot {
 [% if server | bool %]
 server {
   enabled = true
-  bootstrap_expect = 1
   raft_protocol = 3
+[% if consul_enabled %]
   server_join {
     retry_join = [ "nomad.service.consul" ]
   }
-
+[% endif %]
   node_gc_threshold = "1h"
   job_gc_interval = "5m"
   job_gc_threshold = "30m"
@@ -42,6 +42,16 @@ server {
 [% else %]
 client {
   enabled = true
+[% if consul_enabled %]
+  server_join {
+    retry_join = ["nomad.service.consul"]
+  }
+[% else %]
+# This should be a variable list
+  server_join {
+    retry_join = ["bare", "sense", "pi3"]
+  }
+[% endif %]
 }
 [% endif %]
 
