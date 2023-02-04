@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: wait for cloud init to complete
-      wait_for:
+      ansible.builtin.wait_for:
         state: present
         path: /var/log/cloud-init-output.log
         search_regex: "^.*finished.*$"

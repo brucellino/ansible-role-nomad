@@ -46,6 +46,9 @@ client {
   server_join {
     retry_join = ["nomad.service.consul"]
   }
+  # volume configuration
+
+  # meta configuration
 [% else %]
 # This should be a variable list
   server_join {
