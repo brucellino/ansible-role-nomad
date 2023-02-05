@@ -79,3 +79,15 @@ consul {
 
 }
 [% endif  %]
+plugin "raw_exec" {
+  config {
+    enabled = true
+    no_cgroups = true
+  }
+}
+
+vault {
+  enabled = true
+  address = "http://active.vault.service.consul:8200"
+  token = "token"
+}
