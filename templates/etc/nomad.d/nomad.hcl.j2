@@ -42,6 +42,8 @@ server {
 [% else %]
 client {
   enabled = true
+  disable_remote_exec = false
+  node_class = [[ ansible_userspace_bits ]]
 [% if consul_enabled %]
   server_join {
     retry_join = ["nomad.service.consul"]
@@ -55,6 +57,12 @@ client {
     retry_join = ["bare", "sense", "pi3"]
   }
 [% endif %]
+[% for hv in nomad_host_volumes %]
+  host_volume "[[ hv.name ]]" {
+    path = "/data/[[ hv.path ]]"
+    read_only = false
+  }
+[% endfor %]
 }
 [% endif %]
 
@@ -90,4 +98,12 @@ vault {
   enabled = true
   address = "http://active.vault.service.consul:8200"
   token = "token"
+}
+
+telemetry {
+  collection_interval = "1s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
 }

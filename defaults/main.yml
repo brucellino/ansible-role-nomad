@@ -37,6 +37,14 @@ nomad_install_dir: /usr/local/bin
 nomad_data_dir: /opt/nomad
 nomad_config_dir: /etc/nomad.d
 
+nomad_host_volumes:
+  - name: jenkins_config
+    path: jenkins_config
+  - name: jenkins_casc
+    path: jenkins_casc
+  - name: scratch
+    path: nomad
+
 ## Nomad server config variables
 nomad_datacenter: "dc-test"
 autopilot_enabled: false
