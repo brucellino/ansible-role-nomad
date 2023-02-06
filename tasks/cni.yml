@@ -6,6 +6,14 @@
     owner: root
     group: root
 
+- name: Ensure cni config  dir
+  ansible.builtin.file:
+    path: /etc/cni/net.d
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
 - name: Ensure cni plugins
   ansible.builtin.unarchive:
     src: "{{ cni_plugins_url | replace(' ', '') }}"
