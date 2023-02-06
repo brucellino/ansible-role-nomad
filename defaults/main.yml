@@ -58,7 +58,10 @@ containerd_url: >-
   containerd-{{ containerd_version }}
   -linux-{{ hashi_arch[ansible_architecture] }}.tar.gz
 containerd_install_dir: /usr/local
-
+nomad_plugin_containerd_version: 0.9.3
+nomad_plugin_containerd_url: >-
+  https://github.com/Roblox/nomad-driver-containerd/releases/download/
+  v{{ nomad_plugin_containerd_version }}/containerd-driver-arm64
 ## Runc variables
 runc_version: 1.1.4
 runc_url: >-

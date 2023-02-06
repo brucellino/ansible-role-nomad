@@ -44,6 +44,15 @@
     owner: root
     group: root
 
+- name: Ensure containerd plugin
+  ansible.builtin.get_url:
+    url: "{{ nomad_plugin_containerd_url |replace(' ', '') }}"
+    dest: "{{ nomad_data_dir }}/plugins"
+    force: true
+    mode: 0777
+    owner: root
+    group: root
+
 - name: Add Nomad configuration for containerd
   ansible.builtin.copy:
     dest: "{{ nomad_config_dir }}/containerd.hcl"
