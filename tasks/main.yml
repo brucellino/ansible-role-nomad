@@ -2,9 +2,22 @@
 # tasks file for ansible-role-nomad
 - name: Install
   ansible.builtin.import_tasks: install.yml
+  tags:
+    - base
 - name: Enable containerd
   ansible.builtin.import_tasks: containerd.yml
-  when: not (server | bool) and (enable_containerd | bool)
+  # when: not (server | bool) and (enable_containerd | bool)
+  when: enable_containerd | bool
+  tags:
+    - containerd
 - name: Enable CNI
   ansible.builtin.import_tasks: cni.yml
-  when: not (server | bool) and (enable_cni | bool)
+  # when: not (server | bool) and (enable_cni | bool)
+  when: enable_cni | bool
+  tags:
+    - cni
+- name: Enable Podman
+  ansible.builtin.import_tasks: podman.yml
+  when: enable_podman | bool
+  tags:
+    - podman
