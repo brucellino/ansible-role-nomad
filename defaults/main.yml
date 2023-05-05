@@ -2,10 +2,14 @@
 # defaults file for ansible-role-nomad
 # Enable Nomad features
 consul_enabled: false
-enable_containerd: true
-enable_cni: true
-enable_podman: true
 enable_vault: true
+enable_cni: true
+
+# Enable Nomad plugins
+enable_containerd: true
+enable_podman: true
+enable_raw_exec: true
+
 # prerequisite packages
 prerequisites:
   ubuntu:

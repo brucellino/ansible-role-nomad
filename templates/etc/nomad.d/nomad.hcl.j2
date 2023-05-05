@@ -40,6 +40,7 @@ server {
 
 }
 [% else %]
+
 client {
   enabled = true
   disable_remote_exec = false
@@ -63,6 +64,9 @@ client {
     read_only = false
   }
 [% endfor %]
+  artifact {
+    decompression_file_count_limit = 0
+  }
 }
 [% endif %]
 
@@ -87,15 +91,29 @@ consul {
 
 }
 [% endif  %]
+[% if enable_raw_exec %]
 plugin "raw_exec" {
   config {
     enabled = true
     no_cgroups = true
   }
 }
+[% endif %]
+
+[% if enable_podman %]
+plugin "nomad-driver-podman" {
+  config {
+    recover_stopped = true
+    extra_labels = ["job_name"]
+    gc {
+      container = true
+    }
+  }
+}
+[% endif %]
 
 vault {
-  enabled = true
+  enabled = [[ enable_vault | bool | lower ]]
   address = "http://active.vault.service.consul:8200"
   token = "token"
 }
