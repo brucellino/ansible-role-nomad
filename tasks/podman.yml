@@ -1,0 +1,15 @@
+---
+- name: Ensure podman present
+  ansible.builtin.package:
+    name: podman
+    state: present
+
+- name: Ensure Nomad Podman driver
+  ansible.builtin.unarchive:
+    src: "{{ nomad_plugin_podman_url | replace(' ', '') }}"
+    dest: "{{ nomad_data_dir }}/plugins"
+    remote_src: true
+    validate_certs: true
+    mode: '0777'
+    owner: root
+    group: root

@@ -6,13 +6,25 @@
     state: present
   loop: "{{ prerequisites[ansible_distribution | lower] }}"
 
+- name: Check Nomad version
+  ansible.builtin.command:
+    cmd: nomad -version
+  register: nomad_version_output
+  changed_when: false
+
+- name: Remove old Nomad
+  ansible.builtin.file:
+    path: "{{ nomad_install_dir }}/nomad"
+    state: absent
+  when: nomad_version not in nomad_version_output.stdout
+
 - name: Ensure nomad binary
   ansible.builtin.unarchive:
     src: "{{ hashicorp_releases_url }}/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_{{ hashi_arch[ansible_architecture] }}.zip"
     remote_src: true
     dest: "{{ nomad_install_dir }}"
     creates: "{{ nomad_install_dir }}/nomad"
-    mode: 0777
+    mode: "0777"
     owner: root
     group: root
 
@@ -20,7 +32,7 @@
   ansible.builtin.file:
     path: "{{ nomad_data_dir }}"
     state: directory
-    mode: 0777
+    mode: "0777"
     owner: root
     group: root
 
@@ -28,7 +40,7 @@
   ansible.builtin.file:
     path: "{{ nomad_data_dir }}/plugins"
     state: directory
-    mode: 07777
+    mode: "0777"
     owner: root
     group: root
 
@@ -36,7 +48,7 @@
   ansible.builtin.file:
     path: "{{ nomad_config_dir }}"
     state: directory
-    mode: 0744
+    mode: "0744"
     owner: root
     group: root
 
@@ -46,7 +58,7 @@
     - name: Add nomad group
       ansible.builtin.group:
         name: nomad
-        gid: 1010
+        gid: "1010"
         state: present
     - name: Add nomad user
       ansible.builtin.user:
@@ -61,14 +73,14 @@
   ansible.builtin.file:
     path: "{{ nomad_config_dir }}"
     state: directory
-    mode: 0777
+    mode: "0777"
     owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
 
 - name: Template Nomad config directory
   ansible.builtin.template:
     src: etc/nomad.d/nomad.hcl.j2
     dest: "{{ nomad_config_dir }}/nomad.hcl"
-    mode: 0644
+    mode: "0644"
     owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
     group: "{{ (server | bool) | ternary('nomad', 'root') }}"
     newline_sequence: \n
@@ -83,7 +95,7 @@
     dest: /etc/systemd/system/nomad.service
     block_start_string: "[%"
     block_end_string: "%]"
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   notify: Reload service

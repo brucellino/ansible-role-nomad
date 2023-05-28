@@ -6,7 +6,7 @@
     creates: "{{ containerd_install_dir }}/bin/containerd"
     remote_src: true
     validate_certs: true
-    mode: 0777
+    mode: "0777"
     owner: root
     group: root
 
@@ -14,7 +14,7 @@
   ansible.builtin.template:
     src: etc/systemd/system/containerd.service.j2
     dest: /etc/systemd/system/containerd.service
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   notify: Reload service
@@ -29,7 +29,7 @@
   ansible.builtin.get_url:
     url: "{{ runc_url | replace(' ', '') }}"
     dest: "{{ runc_install_dir }}"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
@@ -40,16 +40,16 @@
     creates: "{{ nerdctl_install_dir }}/nerdctl"
     remote_src: true
     validate_certs: true
-    mode: 0700
+    mode: "0700"
     owner: root
     group: root
 
 - name: Ensure containerd plugin
   ansible.builtin.get_url:
-    url: "{{ nomad_plugin_containerd_url |replace(' ', '') }}"
+    url: "{{ nomad_plugin_containerd_url | replace(' ', '') }}"
     dest: "{{ nomad_data_dir }}/plugins/containerd-plugin"
     force: true
-    mode: 0777
+    mode: "0777"
     owner: root
     group: root
 
@@ -58,6 +58,6 @@
     dest: "{{ nomad_config_dir }}/containerd.hcl"
     src: etc/nomad.d/containerd.hcl
     backup: true
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root

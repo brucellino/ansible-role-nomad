@@ -2,7 +2,7 @@
   ansible.builtin.file:
     path: "{{ cni_plugins_dir }}"
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
@@ -10,7 +10,7 @@
   ansible.builtin.file:
     path: /etc/cni/net.d
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
@@ -21,7 +21,7 @@
     creates: "{{ cni_plugins_dir }}/dhcp"
     remote_src: true
     validate_certs: true
-    mode: 0777
+    mode: "0777"
     owner: root
     group: root
 
@@ -29,6 +29,6 @@
   ansible.builtin.template:
     src: etc/cni/net.d/10-nomad.conf.j2
     dest: /etc/cni/net.d/10-nomad.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
