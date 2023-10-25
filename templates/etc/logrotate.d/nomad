@@ -1,0 +1,6 @@
+/var/log/nomad.log {
+	daily
+	missingok
+	rotate 7
+	compress
+}

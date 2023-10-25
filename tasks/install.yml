@@ -89,6 +89,15 @@
     variable_start_string: "[["
     variable_end_string: "]]"
 
+- name: Template Nomad Logrotate Entry
+  ansible.builtin.tempalte:
+    src: etc/logrotate.d/nomad
+    dest: /etc/logrotate.d/nomad
+    mode: "0644"
+    owner: root
+    group: root
+  notify: restart logrotate
+
 - name: Template systemd unit
   ansible.builtin.template:
     src: etc/systemd/system/nomad.service.j2
