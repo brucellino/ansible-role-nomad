@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-role-nomad
 # Enable Nomad features
-consul_enabled: false
+consul_enabled: true
 enable_vault: true
 enable_cni: true
 
