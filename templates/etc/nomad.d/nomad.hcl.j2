@@ -17,7 +17,7 @@ server {
   raft_protocol = 3
 [% if consul_enabled %]
   server_join {
-    retry_join = [ "nomad.service.consul" ]
+    retry_join = [ "sense", "bare", "octopi" ]
   }
 [% endif %]
   node_gc_threshold = "1h"
@@ -39,7 +39,7 @@ server {
   }
 
 }
-[% else %]
+[% endif %]
 
 client {
   enabled = true
@@ -55,7 +55,7 @@ client {
 [% else %]
 # This should be a variable list
   server_join {
-    retry_join = ["bare", "sense", "pi3"]
+    retry_join = ["bare", "sense", "octopi"]
   }
 [% endif %]
 [% for hv in nomad_host_volumes %]
@@ -68,7 +68,6 @@ client {
     decompression_file_count_limit = 0
   }
 }
-[% endif %]
 
 acl {
   enabled = false
@@ -115,7 +114,8 @@ plugin "nomad-driver-podman" {
 vault {
   enabled = [[ enable_vault | bool | lower ]]
   address = "http://active.vault.service.consul:8200"
-  token = "token"
+  token = ""
+  create_from_role = "nomad-cluster"
 }
 
 telemetry {
