@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-role-nomad
 # Enable Nomad features
-consul_enabled: false
+consul_enabled: true
 enable_vault: true
 enable_cni: true
 
@@ -58,14 +58,14 @@ autopilot_enabled: false
 
 # Task drivers
 ## Containerd variables
-containerd_version: 1.7.0
+containerd_version: 1.7.5
 containerd_url: >-
   https://github.com/containerd/containerd/releases/download/
   v{{ containerd_version }}/
   containerd-{{ containerd_version }}
   -linux-{{ hashi_arch[ansible_architecture] }}.tar.gz
 containerd_install_dir: /usr/local
-nomad_plugin_containerd_version: 0.9.3
+nomad_plugin_containerd_version: 0.9.4
 nomad_plugin_containerd_url: >-
   https://github.com/Roblox/nomad-driver-containerd/releases/download/
   v{{ nomad_plugin_containerd_version }}/containerd-driver-arm64
@@ -87,7 +87,7 @@ nerdctl_install_dir: /usr/local/bin
 
 ## Podman variables
 podman_version: 3.0.1
-nomad_plugin_podman_version: 0.4.2
+nomad_plugin_podman_version: 0.5.1
 nomad_plugin_podman_url: >-
   https://releases.hashicorp.com/nomad-driver-podman/
   {{ nomad_plugin_podman_version }}/

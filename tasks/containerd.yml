@@ -47,7 +47,7 @@
 - name: Ensure containerd plugin
   ansible.builtin.get_url:
     url: "{{ nomad_plugin_containerd_url | replace(' ', '') }}"
-    dest: "{{ nomad_data_dir }}/plugins/containerd-plugin"
+    dest: "{{ nomad_data_dir }}/plugins/containerd-driver"
     force: true
     mode: "0777"
     owner: root
