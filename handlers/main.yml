@@ -3,3 +3,8 @@
 - name: Reload service
   ansible.builtin.systemd:
     daemon_reload: true
+
+- name: Restart logrotate
+  ansible.builtin.service:
+    name: logrotate
+    state: restarted
