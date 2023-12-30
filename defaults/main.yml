@@ -18,12 +18,16 @@ prerequisites:
     - unzip
     - vim
     - wget
+    - ca-certificates
+    - gnupg
   debian:
     - curl
     - net-tools
     - unzip
     - vim
     - wget
+    - ca-certificates
+    - gnupg
 hashi_arch:
   x86_64: amd64
   arm64: arm64
@@ -39,7 +43,7 @@ cni_plugins_dir: /opt/cni/bin
 
 # Nomad vars
 hashicorp_releases_url: https://releases.hashicorp.com
-nomad_version: 1.5.3
+nomad_version: 1.7.0
 nomad_install_dir: /usr/local/bin
 nomad_data_dir: /opt/nomad
 nomad_config_dir: /etc/nomad.d
@@ -68,7 +72,7 @@ containerd_install_dir: /usr/local
 nomad_plugin_containerd_version: 0.9.4
 nomad_plugin_containerd_url: >-
   https://github.com/Roblox/nomad-driver-containerd/releases/download/
-  v{{ nomad_plugin_containerd_version }}/containerd-driver-arm64
+  v{{ nomad_plugin_containerd_version }}/containerd-driver{{ (hashi_arch[ansible_architecture] in ["arm64", "aarch64"]) | ternary("-arm64", "") }}
 ## Runc variables
 runc_version: 1.1.6
 runc_url: >-
@@ -98,4 +102,11 @@ nomad_plugin_podman_url: >-
 
 ## raw_exec variables
 
-##
+## Docker variables
+enable_docker: true
+docker_repo_key_url: https://download.docker.com/linux/ubuntu/gpg
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - docker-buildx-plugin
+  - docker-ce-rootless-extras

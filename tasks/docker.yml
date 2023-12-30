@@ -1,0 +1,25 @@
+- name: Ensure Docker Repo GPG key
+  ansible.builtin.apt_key:
+    url: "{{ docker_repo_key_url }}"
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/docker.gpg
+
+- name: Ensure Docker repo
+  ansible.builtin.apt_repository:
+    repo: >
+      "deb
+      [arch={{ hashi_arch[ansible_facts.architecture] }}
+      signed-by=/etc/apt/trusted.gpg.d/docker.gpg]
+      https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }}
+      stable"
+    state: present
+    mode: "0644"
+    update_cache: true
+    validate_certs: true
+    filename: /etc/apt/sources.list.d/docker
+
+- name: Ensure docker packages
+  ansible.builtin.package:
+    name: "{{ docker_packages }}"
+    state: present
+    update_cache: true
