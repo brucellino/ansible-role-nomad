@@ -7,7 +7,6 @@ enable_cni: true
 
 # Enable Nomad plugins
 enable_containerd: true
-enable_podman: true
 enable_raw_exec: true
 
 # prerequisite packages
@@ -43,10 +42,11 @@ cni_plugins_dir: /opt/cni/bin
 
 # Nomad vars
 hashicorp_releases_url: https://releases.hashicorp.com
-nomad_version: 1.7.0
+nomad_version: 1.7.2
 nomad_install_dir: /usr/local/bin
 nomad_data_dir: /opt/nomad
 nomad_config_dir: /etc/nomad.d
+nomad_enable_acl: true
 
 nomad_host_volumes:
   - name: jenkins_config
@@ -90,7 +90,8 @@ nerdctl_url: >-
 nerdctl_install_dir: /usr/local/bin
 
 ## Podman variables
-podman_version: 3.0.1
+enable_podman: true
+podman_version: 4.8.0
 nomad_plugin_podman_version: 0.5.1
 nomad_plugin_podman_url: >-
   https://releases.hashicorp.com/nomad-driver-podman/
