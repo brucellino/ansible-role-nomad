@@ -6,6 +6,23 @@
     state: present
   loop: "{{ prerequisites[ansible_distribution | lower] }}"
 
+- name: Ensure apt keyring directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    mode: "0755"
+    state: directory
+    owner: root
+    group: root
+
+- name: Ensure volumes
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: "0644"
+    owner: root
+    group: root
+    state: directory
+  loop: "{{ nomad_host_volumes }}"
+
 - name: Check Nomad version
   ansible.builtin.command:
     cmd: nomad -version
@@ -84,10 +101,10 @@
     mode: "0777"
     owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
 
-- name: Template Nomad config directory
+- name: Template Nomad config
   ansible.builtin.template:
-    src: etc/nomad.d/nomad.hcl.j2
-    dest: "{{ nomad_config_dir }}/nomad.hcl"
+    src: etc/nomad.d/{{ item }}.j2
+    dest: "{{ nomad_config_dir }}/{{ item }}"
     mode: "0644"
     owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
     group: "{{ (server | bool) | ternary('nomad', 'root') }}"
@@ -96,6 +113,9 @@
     block_end_string: "%]"
     variable_start_string: "[["
     variable_end_string: "]]"
+  loop:
+    - nomad.hcl
+    - vault.hcl
 
 - name: Template Nomad Logrotate Entry
   ansible.builtin.template:
