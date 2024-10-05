@@ -16,7 +16,7 @@
 
 - name: Ensure volumes
   ansible.builtin.file:
-    path: "{{ item.path }}"
+    path: "/data/{{ item.path }}"
     mode: "0644"
     owner: root
     group: root
