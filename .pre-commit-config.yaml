@@ -9,7 +9,7 @@ repos:
     - id: check-yaml
     - id: check-added-large-files
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.30.0
+    rev: 0.31.0
     hooks:
       - id: check-github-workflows
   - repo: https://github.com/ansible-community/ansible-lint
@@ -34,7 +34,7 @@ repos:
         stages: [commit-msg]
         additional_dependencies: ['@commitlint/config-conventional']
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.30.0
+    rev: 0.31.0
     hooks:
       - id: check-github-workflows
 
