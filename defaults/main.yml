@@ -19,6 +19,8 @@ prerequisites:
     - wget
     - ca-certificates
     - gnupg
+    - lshw
+    - lm-sensors
   debian:
     - curl
     - net-tools
@@ -27,6 +29,8 @@ prerequisites:
     - wget
     - ca-certificates
     - gnupg
+    - lshw
+    - lm-sensors
 hashi_arch:
   x86_64: amd64
   arm64: arm64
