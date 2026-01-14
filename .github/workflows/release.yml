@@ -19,7 +19,7 @@ jobs:
       - name: Ansible Lint
         uses: ansible-actions/ansible-lint-action@v1.0.3
         with:
-          path: test/lint-playbook.yml
+          target: test/lint-playbook.yml
         env:
           ANSIBLE_ROLES_PATH: "${PWD}/../"
   packer_lint:
