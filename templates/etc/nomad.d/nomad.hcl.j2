@@ -49,15 +49,13 @@ client {
   server_join {
     retry_join = ["nomad.service.consul"]
   }
-  # volume configuration
-
-  # meta configuration
 [% else %]
 # This should be a variable list
   server_join {
     retry_join = ["bare", "sense", "octopi"]
   }
 [% endif %]
+# volume configuration
 [% for hv in nomad_host_volumes %]
   host_volume "[[ hv.name ]]" {
     path = "/data/[[ hv.path ]]"
@@ -72,6 +70,7 @@ client {
 acl {
   enabled = [[ nomad_enable_acl | bool | lower ]]
 }
+bind_addr = "{{ GetInterfaceIP \"tailscale0\" }}"
 
 [% if consul_enabled %]
 consul {
@@ -81,7 +80,7 @@ consul {
   auto_advertise      = true
   server_auto_join    = true
   client_auto_join    = true
-  tags = ["nomad", "ansible-managed"]
+  tags = ["ansible-managed"]
   timeout = "30s"
 }
 [% endif  %]
@@ -114,3 +113,9 @@ telemetry {
   publish_allocation_metrics = true
   publish_node_metrics = true
 }
+
+log_file = "/var/log/nomad/nomad.log"
+log_level = "INFO"
+log_json = true
+log_rotate_duration = "24h"
+log_rotate_bytes = 10485760
