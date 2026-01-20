@@ -101,6 +101,17 @@
     mode: "0777"
     owner: "{{ (server | bool) | ternary('nomad', 'root') }}"
 
+- name: Get CPU model
+  ansible.builtin.shell: |
+    set -euo pipefail
+    cat /sys/firmware/devicetree/base/model | tr -d '\0'
+  changed_when: false
+  register: model
+
+# - name: Get fan type
+#   ansible.builtin.command: cat /sys/class/thermal/cooling_device0/type
+#   register: fan
+
 - name: Template Nomad config
   ansible.builtin.template:
     src: etc/nomad.d/{{ item }}.j2
@@ -116,6 +127,7 @@
   loop:
     - nomad.hcl
     - vault.hcl
+    - ui.hcl
 
 - name: Template Nomad Logrotate Entry
   ansible.builtin.template:
