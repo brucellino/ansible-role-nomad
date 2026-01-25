@@ -62,11 +62,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
-
-      - name: Publish to Galaxy
-        uses: ansible-actions/ansible-galaxy-action@v1.2.0
-        with:
-          galaxy_api_key: ${{ secrets.galaxy_api_key }}
+      # prod galaxy doesn't seem to be working with github auth in 2026
+      # - name: Publish to Galaxy
+      #   uses: ansible-actions/ansible-galaxy-action@v1.2.0
+      #   with:
+      #     galaxy_api_key: ${{ secrets.galaxy_api_key }}
   build:
     name: Build
     needs:
