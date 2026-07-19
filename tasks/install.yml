@@ -38,7 +38,7 @@
 
 - name: Ensure nomad binary
   ansible.builtin.unarchive:
-    src: "{{ hashicorp_releases_url }}/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_{{ hashi_arch[ansible_architecture] }}.zip"
+    src: "{{ hashicorp_releases_url }}/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_{{ hashi_arch[ansible_facts.architecture] }}.zip"
     remote_src: true
     dest: "{{ nomad_install_dir }}"
     creates: "{{ nomad_install_dir }}/nomad"

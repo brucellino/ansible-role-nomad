@@ -43,10 +43,9 @@ cni_plugins_url: >-
   v{{ cni_plugins_version }}/
   cni-plugins-linux-{{ hashi_arch[ansible_architecture] }}-v{{ cni_plugins_version }}.tgz
 cni_plugins_dir: /opt/cni/bin
-
 # Nomad vars
 hashicorp_releases_url: https://releases.hashicorp.com
-nomad_version: 1.7.2
+nomad_version: 2.0.1
 nomad_install_dir: /usr/local/bin
 nomad_data_dir: /opt/nomad
 nomad_config_dir: /etc/nomad.d
@@ -84,7 +83,6 @@ runc_url: >-
   releases/download/v{{ runc_version }}/
   runc.{{ hashi_arch[ansible_architecture] }}
 runc_install_dir: /usr/local/sbin
-
 ## (contai)Nerdctl variables
 nerdctl_version: 1.3.1 # Check that this is compatible with containerd versions
 nerdctl_url: >-
@@ -92,7 +90,6 @@ nerdctl_url: >-
   releases/download/v{{ nerdctl_version }}/
   nerdctl-{{ nerdctl_version }}-linux-{{ hashi_arch[ansible_architecture] }}.tar.gz
 nerdctl_install_dir: /usr/local/bin
-
 ## Podman variables
 enable_podman: true
 podman_version: 4.8.0
