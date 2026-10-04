@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Ansible Lint
-        uses: ansible/ansible-lint@v26.1.1
+        uses: ansible/ansible-lint@v26.9.0
         env:
           ANSIBLE_ROLES_PATH: "${PWD}/../"
   packer_lint:
