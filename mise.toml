@@ -4,5 +4,8 @@ _.python.venv = { path = ".venv", create = true }
 [tools]
 python = "3.14.2"
 uv = "latest"
-node = "24"
 prek = "0.5.5"
+
+[tasks.install_deps]
+description = "Insall Ansible dependencies"
+run = "uv pip install -r requirements.txt"
