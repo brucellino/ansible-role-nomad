@@ -3,10 +3,10 @@ _.python.venv = { path = ".venv", create = true }
 
 [tools]
 python = "3.14.8"
-uv = "0.12.23"
+uv = "0.12.24"
 prek = "0.5.5"
 packer = "1.16.1"
 
 [tasks.install_deps]
-description = "Insall Ansible dependencies"
+description = "Install Ansible dependencies"
 run = "uv pip install -r requirements.txt"

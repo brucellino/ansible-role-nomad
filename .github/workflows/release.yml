@@ -24,8 +24,8 @@ jobs:
         run: mise tasks run install_deps
       - name: Ansible Lint
         run: ansible-lint
-        env:
-          ANSIBLE_ROLES_PATH: "${PWD}/../"
+        # env:
+        #   ANSIBLE_ROLES_PATH: "${PWD}/../"
   packer_lint:
     name: Packer lint
     runs-on: ubuntu-26.04
