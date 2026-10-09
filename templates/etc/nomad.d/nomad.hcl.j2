@@ -64,7 +64,7 @@ client {
 [% endfor %]
 
   meta {
-    model = "[[ model.stdout ]]"
+    model = "[[ model.stdout | default('amd64') ]]"
   }
 
   artifact {

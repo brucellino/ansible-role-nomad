@@ -105,12 +105,15 @@
   ansible.builtin.shell: |
     set -euo pipefail
     cat /sys/firmware/devicetree/base/model | tr -d '\0'
-  changed_when: false
   register: model
+  changed_when: false
+  failed_when: false
 
-# - name: Get fan type
-#   ansible.builtin.command: cat /sys/class/thermal/cooling_device0/type
-#   register: fan
+- name: Get fan type
+  ansible.builtin.command: cat /sys/class/thermal/cooling_device0/type
+  register: fan
+  failed_when: false
+  changed_when: false
 
 - name: Template Nomad config
   ansible.builtin.template:

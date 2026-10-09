@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Add Dev tools
-        uses: jdx/mise-action@v7
+        uses: jdx/mise-action@v5
         with:
           install: true
       - name: Add dev deps
@@ -35,7 +35,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Add Dev tools
-        uses: jdx/mise-action@v7
+        uses: jdx/mise-action@v5
         with:
           install: true
       - name: Add dev deps
@@ -77,7 +77,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Add Dev tools
-        uses: jdx/mise-action@v7
+        uses: jdx/mise-action@v5
         with:
           install: true
       - name: Add dev deps
