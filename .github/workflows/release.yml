@@ -20,12 +20,8 @@ jobs:
         uses: jdx/mise-action@v5
         with:
           install: true
-      - name: Add dev deps
-        run: mise tasks run install_deps
       - name: Ansible Lint
         run: ansible-lint
-        # env:
-        #   ANSIBLE_ROLES_PATH: "${PWD}/../"
   packer_lint:
     name: Packer lint
     runs-on: ubuntu-26.04
@@ -38,12 +34,9 @@ jobs:
         uses: jdx/mise-action@v5
         with:
           install: true
-      - name: Add dev deps
-        run: mise tasks run install_deps
       - name: Init packer
         run: packer init .
         working-directory: .github/build
-
   release:
     name: Release
     needs:
@@ -63,7 +56,6 @@ jobs:
         run: |
           npm install -D '@semantic-release/changelog' \
                           '@semantic-release/git'
-
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -80,5 +72,3 @@ jobs:
         uses: jdx/mise-action@v5
         with:
           install: true
-      - name: Add dev deps
-        run: mise tasks run install_deps
