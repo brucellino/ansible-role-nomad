@@ -44,7 +44,7 @@ server {
 client {
   enabled = true
   disable_remote_exec = false
-  node_class = [[ ansible_userspace_bits ]]
+  node_class = [[ ansible_facts['userspace_bits'] ]]
 [% if consul_enabled %]
   server_join {
     retry_join = ["nomad.service.consul"]

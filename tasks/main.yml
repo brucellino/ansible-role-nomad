@@ -1,9 +1,12 @@
 ---
 # tasks file for ansible-role-nomad
-- name: Install
-  ansible.builtin.import_tasks: install.yml
-  tags:
-    - base
+# - name: Install
+#   ansible.builtin.import_tasks: install.yml
+#   tags:
+#     - base
+
+- name: Install From Repo
+  ansible.builtin.import_tasks: install-repo.yml
 
 - name: Enable containerd
   ansible.builtin.import_tasks: containerd.yml
@@ -27,12 +30,12 @@
     - podman
     - task_drivers
 
-- name: Enable Docker
-  ansible.builtin.import_tasks: docker.yml
-  when: enable_docker | bool
-  tags:
-    - docker
-    - task_drivers
+# - name: Enable Docker
+#   ansible.builtin.import_tasks: docker.yml
+#   when: enable_docker | bool
+#   tags:
+#     - docker
+#     - task_drivers
 
 - name: Ensure Nomad running
   ansible.builtin.service:
