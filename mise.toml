@@ -3,7 +3,6 @@
 
 [tools]
 # python = "3.14.8"
-uv = "0.12.24"
 prek = "0.5.5"
 packer = "1.16.1"
 "pipx:ansible" = "14.5.0"
