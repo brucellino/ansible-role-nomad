@@ -37,6 +37,8 @@ jobs:
       - name: Init packer
         run: packer init .
         working-directory: .github/build
+        env:
+          PACKER_GITHUB_API_TOKEN: "{{ secrets.GITHUB_TOKEN  }}"
   release:
     name: Release
     needs:
