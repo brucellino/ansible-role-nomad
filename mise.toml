@@ -2,4 +2,4 @@
 prek = "0.5.11"
 packer = "1.16.3"
 "pipx:ansible" = "15.0.0"
-"pipx:ansible-lint" = "26.11.0"
+"pipx:ansible-lint" = "26.11.1"
